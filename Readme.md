@@ -44,11 +44,11 @@ As funções podem ser:
   function bar(foo) {}
   ```
 
-- propriedade de objeto: `obj.myFunction = function() {};`
+- propriedade de objeto: `obj.myFunction = function() {};` (métodos)
 - retornadas como resultado de uma função:
   ```javascript
   function fooBar() {
-    return function() {};
+    return function () {};
   }
   ```
 - possuir propriedades atribuidas dinamicamente:
@@ -59,7 +59,7 @@ As funções podem ser:
   }
 
   // Tb poderia ser:
-  const fooBar = function() {};
+  const fooBar = function () {};
 
   fooBar.myProp = 0;
   ```
@@ -98,13 +98,13 @@ abaixo daria erro:
 ```javascript
 fooBar();
 
-let fooBar = function() {};
+let fooBar = function () {};
 ```
 
 Aqui daria certo:
 
 ```javascript
-let fooBar = function() {};
+let fooBar = function () {};
 
 foobar();
 ```
@@ -117,7 +117,7 @@ Foram introduzidos no ES6. É um jeito mais curto do `function expressions`.
 const fooBar = (a, b) => {};
 
 // é o mesmo que:
-const fooBar = function(a, b) {};
+const fooBar = function (a, b) {};
 ```
 
 Diferenciais do arrow function:
@@ -130,7 +130,8 @@ Diferenciais do arrow function:
 
 ### Function constructor
 
-É um jeito q ninguém usa, usando `new`.
+É um jeito q ninguém usa, usando `new`, e o corpo da função é uma string q passa
+como argumento do obj Function. Isto ficou no passado.
 
 ```javascript
 const fooBar = new Function("a", "b", "return a + b");
@@ -154,7 +155,7 @@ função.
 Ex com uma requisição AJAX clássica:
 
 ```javascript
-ajaxRequest("/data", function() {
+ajaxRequest("/data", function () {
   //Faça algo quando a requisição estiver completo
 });
 ```
@@ -175,6 +176,18 @@ function fooBar(a, b) {}
 
 ```javascript
 function fooBar(a = 1, b = "foobar") {}
+```
+
+JS não tem parâmetros opcionais. Para mascarar, vc pode associar algum valor
+nulo ao parâmetro opcional, como `0, null, ''`. Se não existir um valor
+predefinido para parâmetro opcional, retornará undefined se vc não usar como
+argumento na hora de invocar.
+Ex:
+
+`b` é opcional. Como não existe no js, eu boto zero, e se não enviarem, b é 0.
+
+```javascript
+function fooBar(a, b = 0) {}
 ```
 
 - rest parameter (...)
@@ -240,7 +253,7 @@ Um método é basicamente uma função que foi atribuída para a propriedade de 
 ```javascript
 const obj = {};
 
-obj.foobar = function(a, b) {};
+obj.foobar = function (a, b) {};
 
 console.log(obj.foobar(a, b));
 ```
@@ -274,7 +287,7 @@ Vc pode criar uma função cheia de `this`, porém se não houver um contexto pr
 ```javascript
 const teta = {
   pum: "fooo",
-  peido: "baaar"
+  peido: "baaar",
 };
 
 function fooBar() {
@@ -356,7 +369,7 @@ const foo = {
 
   fooBar() {
     console.log(`${this.name} tem muitas ${this.idade}`);
-  }
+  },
 };
 
 foo.foobar(); // "gay tem muitas tetas"
@@ -370,14 +383,14 @@ imediatamente após sua definição.
 Ex:
 
 ```javascript
-(function() {})();
+(function () {})();
 ```
 
 Tb daria certo se em vez de estar envolto a parenteses, fosse assim:
 
 ```javascript
--(function() {})();
-+(function() {})();
-!(function() {})();
-~(function() {})();
+-(function () {})();
++(function () {})();
+!(function () {})();
+~(function () {})();
 ```
